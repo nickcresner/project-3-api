@@ -189,3 +189,599 @@ Migrating to CreateUsers (20170720085412)
   [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
   [1m[35m (128.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS "final_project_api_development"[0m
   [1m[35m (128.4ms)[0m  [1m[35mDROP DATABASE IF EXISTS "final_project_api_test"[0m
+  [1m[35m (39.9ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (23.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1347200930821886805);[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20170720085412)
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (23.7ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "username" character varying, "firstname" character varying, "lastname" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (2.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170720085412"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddEmailToUser (20170721120441)
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.5ms)[0m  [1m[35mALTER TABLE "users" ADD "user" character varying[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "users" ADD "email" character varying[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" ADD "image" character varying[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "users" ADD "bio" text[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" ADD "facebook_id" character varying[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170721120441"]]
+  [1m[35m (6.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-07-21 12:13:24.451568"], ["updated_at", "2017-07-21 12:13:24.451568"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(1347200930821886805)[0m
+  [1m[35m (5.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1347200930821886805);[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateTrips (20170721121555)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (34.8ms)[0m  [1m[35mCREATE TABLE "trips" ("id" bigserial primary key, "name" character varying, "country" character varying, "user_id" bigint, "start_date" date, "end_date" date, "info" text, "image" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_6a33c9e4ea"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE  INDEX  "index_trips_on_user_id" ON "trips"  ("user_id")[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170721121555"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateComments (20170721121615)
+  [1m[35m (6.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (23.1ms)[0m  [1m[35mCREATE TABLE "comments" ("id" bigserial primary key, "body" character varying, "user_id" bigint, "trip_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_03de2dc08c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_a37aa7d703"
+FOREIGN KEY ("trip_id")
+  REFERENCES "trips" ("id")
+)[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE  INDEX  "index_comments_on_user_id" ON "comments"  ("user_id")[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX  "index_comments_on_trip_id" ON "comments"  ("trip_id")[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170721121615"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateLegs (20170721121639)
+  [1m[35m (1.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (8.8ms)[0m  [1m[35mCREATE TABLE "legs" ("id" bigserial primary key, "name" character varying, "lat" float, "lng" float, "trip_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_62db1856e6"
+FOREIGN KEY ("trip_id")
+  REFERENCES "trips" ("id")
+)[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE  INDEX  "index_legs_on_trip_id" ON "legs"  ("trip_id")[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170721121639"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.7ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(1347200930821886805)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (7.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (213.6ms)[0m  [1m[35mDROP DATABASE IF EXISTS "final_project_api_development"[0m
+  [1m[35m (213.4ms)[0m  [1m[35mDROP DATABASE IF EXISTS "final_project_api_test"[0m
+  [1m[35m (37.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (6.7ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT pg_try_advisory_lock(737815420147457505);[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20170720085412)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (30.1ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "username" character varying, "firstname" character varying, "lastname" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170720085412"]]
+  [1m[35m (1.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddEmailToUser (20170721120441)
+  [1m[35m (6.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "users" ADD "user" character varying[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "users" ADD "email" character varying[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "users" ADD "image" character varying[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "users" ADD "bio" text[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" ADD "facebook_id" character varying[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170721120441"]]
+  [1m[35m (9.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateTrips (20170721121555)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (36.4ms)[0m  [1m[35mCREATE TABLE "trips" ("id" bigserial primary key, "name" character varying, "country" character varying, "user_id" bigint, "start_date" date, "end_date" date, "info" text, "image" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_6a33c9e4ea"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE  INDEX  "index_trips_on_user_id" ON "trips"  ("user_id")[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170721121555"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateComments (20170721121615)
+  [1m[35m (6.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (22.4ms)[0m  [1m[35mCREATE TABLE "comments" ("id" bigserial primary key, "body" character varying, "user_id" bigint, "trip_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_03de2dc08c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_a37aa7d703"
+FOREIGN KEY ("trip_id")
+  REFERENCES "trips" ("id")
+)[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE  INDEX  "index_comments_on_user_id" ON "comments"  ("user_id")[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_comments_on_trip_id" ON "comments"  ("trip_id")[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170721121615"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateLegs (20170721121639)
+  [1m[35m (5.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (24.7ms)[0m  [1m[35mCREATE TABLE "legs" ("id" bigserial primary key, "name" character varying, "lat" float, "lng" float, "trip_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_62db1856e6"
+FOREIGN KEY ("trip_id")
+  REFERENCES "trips" ("id")
+)[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE  INDEX  "index_legs_on_trip_id" ON "legs"  ("trip_id")[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170721121639"]]
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateJoinTableTripsUsers (20170721122152)
+  [1m[35m (6.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "trips_users" ("trip_id" bigint NOT NULL, "user_id" bigint NOT NULL)[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170721122152"]]
+  [1m[35m (6.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-07-21 12:29:55.317267"], ["updated_at", "2017-07-21 12:29:55.317267"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT pg_advisory_unlock(737815420147457505)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (93.4ms)[0m  [1m[35mTRUNCATE users RESTART IDENTITY CASCADE[0m
+  [1m[35m (13.3ms)[0m  [1m[35mTRUNCATE trips RESTART IDENTITY CASCADE[0m
+  [1m[35m (4.0ms)[0m  [1m[35mTRUNCATE legs RESTART IDENTITY CASCADE[0m
+  [1m[35m (4.6ms)[0m  [1m[35mTRUNCATE comments RESTART IDENTITY CASCADE[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS "final_project_api_development"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS "final_project_api_test"[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(737815420147457505);[0m
+  [1m[35m (7.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(737815420147457505)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (41.1ms)[0m  [1m[35mTRUNCATE users RESTART IDENTITY CASCADE[0m
+  [1m[35m (98.0ms)[0m  [1m[35mTRUNCATE trips RESTART IDENTITY CASCADE[0m
+  [1m[35m (61.8ms)[0m  [1m[35mTRUNCATE legs RESTART IDENTITY CASCADE[0m
+  [1m[35m (58.3ms)[0m  [1m[35mTRUNCATE comments RESTART IDENTITY CASCADE[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "bio") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "CatLady666"], ["firstname", "Alex"], ["lastname", "Cwiek"], ["created_at", "2017-07-21 12:31:40.334808"], ["updated_at", "2017-07-21 12:31:40.334808"], ["email", "alex@alex.com"], ["bio", "likes cats"]]
+  [1m[35m (6.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "bio") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "KabanosBoy666"], ["firstname", "Nick"], ["lastname", "Cresner"], ["created_at", "2017-07-21 12:31:40.345654"], ["updated_at", "2017-07-21 12:31:40.345654"], ["email", "nick@nick.com"], ["bio", "likes kabanosy and pierogi"]]
+  [1m[35m (11.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS "final_project_api_development"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS "final_project_api_test"[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_try_advisory_lock(737815420147457505);[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(737815420147457505)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (41.2ms)[0m  [1m[35mTRUNCATE users RESTART IDENTITY CASCADE[0m
+  [1m[35m (17.5ms)[0m  [1m[35mTRUNCATE trips RESTART IDENTITY CASCADE[0m
+  [1m[35m (6.6ms)[0m  [1m[35mTRUNCATE legs RESTART IDENTITY CASCADE[0m
+  [1m[35m (36.2ms)[0m  [1m[35mTRUNCATE comments RESTART IDENTITY CASCADE[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "bio") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "CatLady666"], ["firstname", "Alex"], ["lastname", "Cwiek"], ["created_at", "2017-07-21 12:32:03.687825"], ["updated_at", "2017-07-21 12:32:03.687825"], ["email", "alex@alex.com"], ["bio", "likes cats"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "bio") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "KabanosBoy666"], ["firstname", "Nick"], ["lastname", "Cresner"], ["created_at", "2017-07-21 12:32:03.693313"], ["updated_at", "2017-07-21 12:32:03.693313"], ["email", "nick@nick.com"], ["bio", "likes kabanosy and pierogi"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (16.3ms)[0m  [1m[32mINSERT INTO "trips" ("name", "country", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Alex annihilates borek in Bosnia"], ["country", "Bosnia and Herzegovina"], ["user_id", 1], ["created_at", "2017-07-21 12:32:03.768523"], ["updated_at", "2017-07-21 12:32:03.768523"]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "trips_users" ("trip_id", "user_id") VALUES ($1, $2)[0m  [["trip_id", 1], ["user_id", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "trips_users" ("trip_id", "user_id") VALUES ($1, $2)[0m  [["trip_id", 1], ["user_id", 2]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "trips" ("name", "country", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Nick rolls sushi in Sapporo"], ["country", "Japan"], ["user_id", 2], ["created_at", "2017-07-21 12:32:03.796510"], ["updated_at", "2017-07-21 12:32:03.796510"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "trips_users" ("trip_id", "user_id") VALUES ($1, $2)[0m  [["trip_id", 2], ["user_id", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "trips_users" ("trip_id", "user_id") VALUES ($1, $2)[0m  [["trip_id", 2], ["user_id", 2]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "legs" ("name", "lat", "lng", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Sarajevo"], ["lat", 23.2434], ["lng", 23.4334], ["trip_id", 1], ["created_at", "2017-07-21 12:32:03.828740"], ["updated_at", "2017-07-21 12:32:03.828740"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "legs" ("name", "lat", "lng", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Mostar"], ["lat", 24.2434], ["lng", 23.4334], ["trip_id", 1], ["created_at", "2017-07-21 12:32:03.833047"], ["updated_at", "2017-07-21 12:32:03.833047"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "legs" ("name", "lat", "lng", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Sapporo"], ["lat", 23.2434], ["lng", 23.4334], ["trip_id", 2], ["created_at", "2017-07-21 12:32:03.836999"], ["updated_at", "2017-07-21 12:32:03.836999"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "legs" ("name", "lat", "lng", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Tokyo"], ["lat", 24.2434], ["lng", 23.4334], ["trip_id", 2], ["created_at", "2017-07-21 12:32:03.840262"], ["updated_at", "2017-07-21 12:32:03.840262"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.4ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "Wow! Mostar Bridge is beautiful, I cant wait to jump off it"], ["user_id", 1], ["trip_id", 1], ["created_at", "2017-07-21 12:32:03.857448"], ["updated_at", "2017-07-21 12:32:03.857448"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "Please be careful!"], ["user_id", 2], ["trip_id", 1], ["created_at", "2017-07-21 12:32:03.862710"], ["updated_at", "2017-07-21 12:32:03.862710"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "Sayonara"], ["user_id", 1], ["trip_id", 2], ["created_at", "2017-07-21 12:32:03.866319"], ["updated_at", "2017-07-21 12:32:03.866319"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "You say ari-gato like we say ari-gato"], ["user_id", 2], ["trip_id", 2], ["created_at", "2017-07-21 12:32:03.870150"], ["updated_at", "2017-07-21 12:32:03.870150"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/api/trips" for 127.0.0.1 at 2017-07-21 13:32:26 +0100
+  
+ActiveRecord::NoDatabaseError (FATAL:  database "final_project_api_development" does not exist
+):
+  
+activerecord (5.1.2) lib/active_record/connection_adapters/postgresql_adapter.rb:705:in `rescue in connect'
+activerecord (5.1.2) lib/active_record/connection_adapters/postgresql_adapter.rb:701:in `connect'
+activerecord (5.1.2) lib/active_record/connection_adapters/postgresql_adapter.rb:220:in `initialize'
+activerecord (5.1.2) lib/active_record/connection_adapters/postgresql_adapter.rb:38:in `new'
+activerecord (5.1.2) lib/active_record/connection_adapters/postgresql_adapter.rb:38:in `postgresql_connection'
+activerecord (5.1.2) lib/active_record/connection_adapters/abstract/connection_pool.rb:759:in `new_connection'
+activerecord (5.1.2) lib/active_record/connection_adapters/abstract/connection_pool.rb:803:in `checkout_new_connection'
+activerecord (5.1.2) lib/active_record/connection_adapters/abstract/connection_pool.rb:782:in `try_to_checkout_new_connection'
+activerecord (5.1.2) lib/active_record/connection_adapters/abstract/connection_pool.rb:743:in `acquire_connection'
+activerecord (5.1.2) lib/active_record/connection_adapters/abstract/connection_pool.rb:500:in `checkout'
+activerecord (5.1.2) lib/active_record/connection_adapters/abstract/connection_pool.rb:374:in `connection'
+activerecord (5.1.2) lib/active_record/connection_adapters/abstract/connection_pool.rb:931:in `retrieve_connection'
+activerecord (5.1.2) lib/active_record/connection_handling.rb:116:in `retrieve_connection'
+activerecord (5.1.2) lib/active_record/connection_handling.rb:88:in `connection'
+activerecord (5.1.2) lib/active_record/migration.rb:562:in `connection'
+activerecord (5.1.2) lib/active_record/migration.rb:553:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.0) lib/rack/cors.rb:93:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.9.1) lib/puma/configuration.rb:224:in `call'
+puma (3.9.1) lib/puma/server.rb:602:in `handle_request'
+puma (3.9.1) lib/puma/server.rb:435:in `process_client'
+puma (3.9.1) lib/puma/server.rb:299:in `block in run'
+puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  [1m[35m (0.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS "final_project_api_development"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS "final_project_api_test"[0m
+  [1m[35m (634.6ms)[0m  [1m[35mCREATE DATABASE "final_project_api_development" ENCODING = 'unicode'[0m
+  [1m[35m (465.0ms)[0m  [1m[35mCREATE DATABASE "final_project_api_test" ENCODING = 'unicode'[0m
+  [1m[35m (24.5ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (22.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1347200930821886805);[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20170720085412)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (22.8ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "username" character varying, "firstname" character varying, "lastname" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170720085412"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddEmailToUser (20170721120441)
+  [1m[35m (5.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "users" ADD "user" character varying[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" ADD "email" character varying[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" ADD "image" character varying[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" ADD "bio" text[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "users" ADD "facebook_id" character varying[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170721120441"]]
+  [1m[35m (6.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateTrips (20170721121555)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (31.2ms)[0m  [1m[35mCREATE TABLE "trips" ("id" bigserial primary key, "name" character varying, "country" character varying, "user_id" bigint, "start_date" date, "end_date" date, "info" text, "image" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_6a33c9e4ea"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (13.5ms)[0m  [1m[35mCREATE  INDEX  "index_trips_on_user_id" ON "trips"  ("user_id")[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170721121555"]]
+  [1m[35m (5.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateComments (20170721121615)
+  [1m[35m (11.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (19.8ms)[0m  [1m[35mCREATE TABLE "comments" ("id" bigserial primary key, "body" character varying, "user_id" bigint, "trip_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_03de2dc08c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_a37aa7d703"
+FOREIGN KEY ("trip_id")
+  REFERENCES "trips" ("id")
+)[0m
+  [1m[35m (7.8ms)[0m  [1m[35mCREATE  INDEX  "index_comments_on_user_id" ON "comments"  ("user_id")[0m
+  [1m[35m (7.7ms)[0m  [1m[35mCREATE  INDEX  "index_comments_on_trip_id" ON "comments"  ("trip_id")[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170721121615"]]
+  [1m[35m (12.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateLegs (20170721121639)
+  [1m[35m (6.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (22.3ms)[0m  [1m[35mCREATE TABLE "legs" ("id" bigserial primary key, "name" character varying, "lat" float, "lng" float, "trip_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_62db1856e6"
+FOREIGN KEY ("trip_id")
+  REFERENCES "trips" ("id")
+)[0m
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE  INDEX  "index_legs_on_trip_id" ON "legs"  ("trip_id")[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170721121639"]]
+  [1m[35m (6.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateJoinTableTripsUsers (20170721122152)
+  [1m[35m (10.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (9.4ms)[0m  [1m[35mCREATE TABLE "trips_users" ("trip_id" bigint NOT NULL, "user_id" bigint NOT NULL)[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170721122152"]]
+  [1m[35m (8.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-07-21 12:33:01.816950"], ["updated_at", "2017-07-21 12:33:01.816950"]]
+  [1m[35m (5.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT pg_advisory_unlock(1347200930821886805)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (43.6ms)[0m  [1m[35mTRUNCATE users RESTART IDENTITY CASCADE[0m
+  [1m[35m (82.3ms)[0m  [1m[35mTRUNCATE trips RESTART IDENTITY CASCADE[0m
+  [1m[35m (62.7ms)[0m  [1m[35mTRUNCATE legs RESTART IDENTITY CASCADE[0m
+  [1m[35m (60.5ms)[0m  [1m[35mTRUNCATE comments RESTART IDENTITY CASCADE[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "bio") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "CatLady666"], ["firstname", "Alex"], ["lastname", "Cwiek"], ["created_at", "2017-07-21 12:33:02.266125"], ["updated_at", "2017-07-21 12:33:02.266125"], ["email", "alex@alex.com"], ["bio", "likes cats"]]
+  [1m[35m (6.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "bio") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "KabanosBoy666"], ["firstname", "Nick"], ["lastname", "Cresner"], ["created_at", "2017-07-21 12:33:02.275945"], ["updated_at", "2017-07-21 12:33:02.275945"], ["email", "nick@nick.com"], ["bio", "likes kabanosy and pierogi"]]
+  [1m[35m (11.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.3ms)[0m  [1m[32mINSERT INTO "trips" ("name", "country", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Alex annihilates borek in Bosnia"], ["country", "Bosnia and Herzegovina"], ["user_id", 1], ["created_at", "2017-07-21 12:33:02.347840"], ["updated_at", "2017-07-21 12:33:02.347840"]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "trips_users" ("trip_id", "user_id") VALUES ($1, $2)[0m  [["trip_id", 1], ["user_id", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "trips_users" ("trip_id", "user_id") VALUES ($1, $2)[0m  [["trip_id", 1], ["user_id", 2]]
+  [1m[35m (5.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "trips" ("name", "country", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Nick rolls sushi in Sapporo"], ["country", "Japan"], ["user_id", 2], ["created_at", "2017-07-21 12:33:02.365178"], ["updated_at", "2017-07-21 12:33:02.365178"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "trips_users" ("trip_id", "user_id") VALUES ($1, $2)[0m  [["trip_id", 2], ["user_id", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "trips_users" ("trip_id", "user_id") VALUES ($1, $2)[0m  [["trip_id", 2], ["user_id", 2]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "legs" ("name", "lat", "lng", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Sarajevo"], ["lat", 23.2434], ["lng", 23.4334], ["trip_id", 1], ["created_at", "2017-07-21 12:33:02.387644"], ["updated_at", "2017-07-21 12:33:02.387644"]]
+  [1m[35m (5.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "legs" ("name", "lat", "lng", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Mostar"], ["lat", 24.2434], ["lng", 23.4334], ["trip_id", 1], ["created_at", "2017-07-21 12:33:02.396951"], ["updated_at", "2017-07-21 12:33:02.396951"]]
+  [1m[35m (6.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.9ms)[0m  [1m[32mINSERT INTO "legs" ("name", "lat", "lng", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Sapporo"], ["lat", 23.2434], ["lng", 23.4334], ["trip_id", 2], ["created_at", "2017-07-21 12:33:02.407744"], ["updated_at", "2017-07-21 12:33:02.407744"]]
+  [1m[35m (5.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "legs" ("name", "lat", "lng", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Tokyo"], ["lat", 24.2434], ["lng", 23.4334], ["trip_id", 2], ["created_at", "2017-07-21 12:33:02.418284"], ["updated_at", "2017-07-21 12:33:02.418284"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.9ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "Wow! Mostar Bridge is beautiful, I cant wait to jump off it"], ["user_id", 1], ["trip_id", 1], ["created_at", "2017-07-21 12:33:02.443465"], ["updated_at", "2017-07-21 12:33:02.443465"]]
+  [1m[35m (5.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "Please be careful!"], ["user_id", 2], ["trip_id", 1], ["created_at", "2017-07-21 12:33:02.453933"], ["updated_at", "2017-07-21 12:33:02.453933"]]
+  [1m[35m (6.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "Sayonara"], ["user_id", 1], ["trip_id", 2], ["created_at", "2017-07-21 12:33:02.464158"], ["updated_at", "2017-07-21 12:33:02.464158"]]
+  [1m[35m (6.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.6ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "You say ari-gato like we say ari-gato"], ["user_id", 2], ["trip_id", 2], ["created_at", "2017-07-21 12:33:02.474207"], ["updated_at", "2017-07-21 12:33:02.474207"]]
+  [1m[35m (6.2ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/api/trips" for 127.0.0.1 at 2017-07-21 13:33:08 +0100
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by TripsController#index as */*
+  Parameters: {"body"=>"Shut up", "user_id"=>1, "event_id"=>1, "trip"=>{"user_id"=>1}}
+  [1m[36mTrip Load (0.7ms)[0m  [1m[34mSELECT "trips".* FROM "trips"[0m
+[active_model_serializers]   [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mComment Load (1.0ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mLeg Load (0.6ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mComment Load (0.5ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mLeg Load (0.4ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (179.74ms)
+Completed 200 OK in 236ms (Views: 207.9ms | ActiveRecord: 31.2ms)
+
+
+Started POST "/api/trips" for 127.0.0.1 at 2017-07-21 13:35:33 +0100
+Processing by TripsController#create as */*
+  Parameters: {"name"=>"Golden Sahara, baby", "country"=>"Mali", "start_date"=>nil, "end_date"=>nil, "info"=>"Super cool trip to the best country in the world", "trip"=>{"name"=>"Golden Sahara, baby", "country"=>"Mali", "start_date"=>nil, "end_date"=>nil, "info"=>"Super cool trip to the best country in the world"}}
+Unpermitted parameter: :trip
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with ActiveModel::Errors (0.65ms)
+Completed 422 Unprocessable Entity in 101ms (Views: 20.5ms | ActiveRecord: 13.8ms)
+
+
+Started POST "/api/trips" for 127.0.0.1 at 2017-07-21 13:35:46 +0100
+Processing by TripsController#create as */*
+  Parameters: {"name"=>"Golden Sahara, baby", "country"=>"Mali", "start_date"=>nil, "end_date"=>nil, "info"=>"Super cool trip to the best country in the world", "user"=>1, "trip"=>{"name"=>"Golden Sahara, baby", "country"=>"Mali", "start_date"=>nil, "end_date"=>nil, "info"=>"Super cool trip to the best country in the world"}}
+Unpermitted parameters: :user, :trip
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with ActiveModel::Errors (0.11ms)
+Completed 422 Unprocessable Entity in 5ms (Views: 0.8ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/api/trips" for 127.0.0.1 at 2017-07-21 13:35:53 +0100
+Processing by TripsController#create as */*
+  Parameters: {"name"=>"Golden Sahara, baby", "country"=>"Mali", "start_date"=>nil, "end_date"=>nil, "info"=>"Super cool trip to the best country in the world", "user_id"=>1, "trip"=>{"name"=>"Golden Sahara, baby", "country"=>"Mali", "user_id"=>1, "start_date"=>nil, "end_date"=>nil, "info"=>"Super cool trip to the best country in the world"}}
+Unpermitted parameter: :trip
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (2.4ms)[0m  [1m[32mINSERT INTO "trips" ("name", "country", "user_id", "info", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Golden Sahara, baby"], ["country", "Mali"], ["user_id", 1], ["info", "Super cool trip to the best country in the world"], ["created_at", "2017-07-21 12:35:53.228942"], ["updated_at", "2017-07-21 12:35:53.228942"]]
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[35m (0.9ms)[0m  [1m[34mSELECT "users".id FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers]   [1m[35m (1.3ms)[0m  [1m[34mSELECT "legs".id FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers]   [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers]   [1m[36mComment Load (0.9ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers]   [1m[36mLeg Load (0.5ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers] Rendered TripSerializer with ActiveModelSerializers::Adapter::Attributes (21.34ms)
+Completed 201 Created in 47ms (Views: 19.9ms | ActiveRecord: 10.3ms)
+
+
+Started GET "/api/trips" for 127.0.0.1 at 2017-07-21 13:36:03 +0100
+Processing by TripsController#index as */*
+  Parameters: {"name"=>"Golden Sahara, baby", "country"=>"Mali", "start_date"=>nil, "end_date"=>nil, "info"=>"Super cool trip to the best country in the world", "user_id"=>1, "trip"=>{"name"=>"Golden Sahara, baby", "country"=>"Mali", "user_id"=>1, "start_date"=>nil, "end_date"=>nil, "info"=>"Super cool trip to the best country in the world"}}
+  [1m[36mTrip Load (0.6ms)[0m  [1m[34mSELECT "trips".* FROM "trips"[0m
+[active_model_serializers]   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mComment Load (1.7ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mLeg Load (0.5ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mComment Load (0.6ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mLeg Load (0.5ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers]   [1m[36mComment Load (0.4ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers]   [1m[36mLeg Load (0.7ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (56.72ms)
+Completed 200 OK in 60ms (Views: 51.9ms | ActiveRecord: 7.9ms)
+
+
+Started POST "/api/comments" for 127.0.0.1 at 2017-07-21 13:37:31 +0100
+Processing by CommentsController#create as */*
+  Parameters: {"trip_id"=>3, "body"=>"Watch out for Touareg separatists!", "user_id"=>1, "comment"=>{"body"=>"Watch out for Touareg separatists!", "user_id"=>1, "trip_id"=>3}}
+Unpermitted parameter: :comment
+  [1m[35m (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTrip Load (0.4ms)[0m  [1m[34mSELECT  "trips".* FROM "trips" WHERE "trips"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (10.1ms)[0m  [1m[32mINSERT INTO "comments" ("body", "user_id", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "Watch out for Touareg separatists!"], ["user_id", 1], ["trip_id", 3], ["created_at", "2017-07-21 12:37:31.119426"], ["updated_at", "2017-07-21 12:37:31.119426"]]
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[35m (0.9ms)[0m  [1m[34mSELECT "users".id FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers]   [1m[35m (0.5ms)[0m  [1m[34mSELECT "legs".id FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers]   [1m[36mLeg Load (0.4ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers] Rendered CommentSerializer with ActiveModelSerializers::Adapter::Attributes (11.48ms)
+Completed 201 Created in 38ms (Views: 12.2ms | ActiveRecord: 14.7ms)
+
+
+Started POST "/api/legs" for 127.0.0.1 at 2017-07-21 13:38:15 +0100
+Error occurred while parsing request parameters.
+Contents:
+
+	{
+			"trip_id": 3,
+		"name": "Bamako",
+		"lat": 32.1223,
+		"lng": 23.2324,
+	}
+  
+ActionDispatch::Http::Parameters::ParseError (822: unexpected token at '{
+			"trip_id": 3,
+		"name": "Bamako",
+		"lat": 32.1223,
+		"lng": 23.2324,
+	}'):
+  
+actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:113:in `rescue in parse_formatted_parameters'
+actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:107:in `parse_formatted_parameters'
+actionpack (5.1.2) lib/action_dispatch/http/request.rb:358:in `block in POST'
+rack (2.0.3) lib/rack/request.rb:57:in `fetch'
+rack (2.0.3) lib/rack/request.rb:57:in `fetch_header'
+actionpack (5.1.2) lib/action_dispatch/http/request.rb:357:in `POST'
+actionpack (5.1.2) lib/action_controller/metal/params_wrapper.rb:286:in `_wrapper_enabled?'
+actionpack (5.1.2) lib/action_controller/metal/params_wrapper.rb:235:in `process_action'
+activerecord (5.1.2) lib/active_record/railties/controller_runtime.rb:22:in `process_action'
+actionpack (5.1.2) lib/abstract_controller/base.rb:124:in `process'
+actionpack (5.1.2) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.2) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:38:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+activerecord (5.1.2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.0) lib/rack/cors.rb:93:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.9.1) lib/puma/configuration.rb:224:in `call'
+puma (3.9.1) lib/puma/server.rb:602:in `handle_request'
+puma (3.9.1) lib/puma/server.rb:435:in `process_client'
+puma (3.9.1) lib/puma/server.rb:299:in `block in run'
+puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started POST "/api/legs" for 127.0.0.1 at 2017-07-21 13:38:24 +0100
+Processing by LegsController#create as */*
+  Parameters: {"trip_id"=>3, "name"=>"Bamako", "lat"=>32.1223, "lng"=>23.2324, "leg"=>{"name"=>"Bamako", "lat"=>32.1223, "lng"=>23.2324, "trip_id"=>3}}
+Unpermitted parameter: :leg
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTrip Load (0.4ms)[0m  [1m[34mSELECT  "trips".* FROM "trips" WHERE "trips"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "legs" ("name", "lat", "lng", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Bamako"], ["lat", 32.1223], ["lng", 23.2324], ["trip_id", 3], ["created_at", "2017-07-21 12:38:24.760262"], ["updated_at", "2017-07-21 12:38:24.760262"]]
+  [1m[35m (6.6ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[35m (0.9ms)[0m  [1m[34mSELECT "users".id FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers]   [1m[35m (0.5ms)[0m  [1m[34mSELECT "legs".id FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers]   [1m[36mLeg Load (0.5ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers] Rendered LegSerializer with ActiveModelSerializers::Adapter::Attributes (13.42ms)
+Completed 201 Created in 33ms (Views: 14.2ms | ActiveRecord: 10.4ms)
+
+
+Started POST "/api/legs" for 127.0.0.1 at 2017-07-21 13:38:40 +0100
+Processing by LegsController#create as */*
+  Parameters: {"trip_id"=>3, "name"=>"Timbuktu", "lat"=>42.1223, "lng"=>23.2324, "leg"=>{"name"=>"Timbuktu", "lat"=>42.1223, "lng"=>23.2324, "trip_id"=>3}}
+Unpermitted parameter: :leg
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTrip Load (0.6ms)[0m  [1m[34mSELECT  "trips".* FROM "trips" WHERE "trips"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "legs" ("name", "lat", "lng", "trip_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Timbuktu"], ["lat", 42.1223], ["lng", 23.2324], ["trip_id", 3], ["created_at", "2017-07-21 12:38:40.836495"], ["updated_at", "2017-07-21 12:38:40.836495"]]
+  [1m[35m (5.6ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[35m (0.9ms)[0m  [1m[34mSELECT "users".id FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers]   [1m[35m (0.6ms)[0m  [1m[34mSELECT "legs".id FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers]   [1m[36mLeg Load (0.8ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers] Rendered LegSerializer with ActiveModelSerializers::Adapter::Attributes (11.43ms)
+Completed 201 Created in 26ms (Views: 10.4ms | ActiveRecord: 9.9ms)
+
+
+Started GET "/api/trips" for 127.0.0.1 at 2017-07-21 13:38:53 +0100
+Processing by TripsController#index as */*
+  Parameters: {"trip_id"=>3, "name"=>"Timbuktu", "lat"=>42.1223, "lng"=>23.2324, "trip"=>{"name"=>"Timbuktu"}}
+  [1m[36mTrip Load (0.6ms)[0m  [1m[34mSELECT "trips".* FROM "trips"[0m
+[active_model_serializers]   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mComment Load (0.4ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mLeg Load (0.4ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mComment Load (0.5ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mLeg Load (0.4ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers]   [1m[36mComment Load (0.4ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers]   [1m[36mLeg Load (0.6ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (44.05ms)
+Completed 200 OK in 48ms (Views: 41.4ms | ActiveRecord: 6.0ms)
+
+
+Started GET "/api/trips" for 127.0.0.1 at 2017-07-21 13:40:26 +0100
+Processing by TripsController#index as */*
+  Parameters: {"trip_id"=>3, "name"=>"Timbuktu", "lat"=>42.1223, "lng"=>23.2324, "trip"=>{"name"=>"Timbuktu"}}
+  [1m[36mTrip Load (0.7ms)[0m  [1m[34mSELECT "trips".* FROM "trips"[0m
+[active_model_serializers]   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mComment Load (0.5ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mLeg Load (0.7ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mComment Load (0.4ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mLeg Load (0.5ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers]   [1m[36mComment Load (0.4ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers]   [1m[36mLeg Load (0.4ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 3]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (198.86ms)
+Completed 200 OK in 229ms (Views: 188.8ms | ActiveRecord: 48.2ms)
+
+
