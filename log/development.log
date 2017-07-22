@@ -1234,3 +1234,411 @@ Unpermitted parameters: :image, :bio, :facebook_id
 Completed 201 Created in 86ms (Views: 33.4ms | ActiveRecord: 6.4ms)
 
 
+Started GET "/api/trips" for 127.0.0.1 at 2017-07-21 21:07:30 +0100
+  [1m[35m (2.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by TripsController#index as HTML
+  [1m[36mTrip Load (8.8ms)[0m  [1m[34mSELECT "trips".* FROM "trips"[0m
+[active_model_serializers]   [1m[36mUser Load (3.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (8.7ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mComment Load (2.2ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mLeg Load (1.7ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mComment Load (0.3ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mLeg Load (0.4ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (175.18ms)
+Completed 200 OK in 272ms (Views: 189.8ms | ActiveRecord: 58.1ms)
+
+
+Started GET "/api/trips" for 127.0.0.1 at 2017-07-21 21:07:32 +0100
+Processing by TripsController#index as HTML
+  [1m[36mTrip Load (1.0ms)[0m  [1m[34mSELECT "trips".* FROM "trips"[0m
+[active_model_serializers]   [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mComment Load (0.6ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mLeg Load (0.5ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mComment Load (0.4ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mLeg Load (0.4ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (42.38ms)
+Completed 200 OK in 105ms (Views: 85.6ms | ActiveRecord: 19.5ms)
+
+
+Started GET "/api/trips/1" for 127.0.0.1 at 2017-07-21 21:07:35 +0100
+Processing by TripsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTrip Load (0.4ms)[0m  [1m[34mSELECT  "trips".* FROM "trips" WHERE "trips"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[35m (0.5ms)[0m  [1m[34mSELECT "users".id FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[35m (0.4ms)[0m  [1m[34mSELECT "legs".id FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mUser Load (7.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mComment Load (1.2ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (29.9ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLeg Load (0.5ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers] Rendered TripSerializer with ActiveModelSerializers::Adapter::Attributes (63.44ms)
+Completed 200 OK in 67ms (Views: 23.4ms | ActiveRecord: 41.2ms)
+
+
+Started GET "/api/trips" for 127.0.0.1 at 2017-07-21 21:07:37 +0100
+Processing by TripsController#index as HTML
+  [1m[36mTrip Load (0.5ms)[0m  [1m[34mSELECT "trips".* FROM "trips"[0m
+[active_model_serializers]   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mComment Load (7.2ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mLeg Load (0.4ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (61.8ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mComment Load (1.5ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mLeg Load (0.5ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (129.63ms)
+Completed 200 OK in 134ms (Views: 59.7ms | ActiveRecord: 73.4ms)
+
+
+Started GET "/api/trips/2" for 127.0.0.1 at 2017-07-21 21:07:38 +0100
+Processing by TripsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mTrip Load (52.6ms)[0m  [1m[34mSELECT  "trips".* FROM "trips" WHERE "trips"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[35m (1.7ms)[0m  [1m[34mSELECT "users".id FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[35m (1.2ms)[0m  [1m[34mSELECT "legs".id FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mComment Load (0.4ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLeg Load (0.7ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers] Rendered TripSerializer with ActiveModelSerializers::Adapter::Attributes (21.68ms)
+Completed 200 OK in 97ms (Views: 16.2ms | ActiveRecord: 58.7ms)
+
+
+Started GET "/api/trips" for 127.0.0.1 at 2017-07-21 21:07:42 +0100
+Processing by TripsController#index as HTML
+  [1m[36mTrip Load (4.8ms)[0m  [1m[34mSELECT "trips".* FROM "trips"[0m
+[active_model_serializers]   [1m[36mUser Load (78.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mComment Load (0.4ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mLeg Load (0.4ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mComment Load (1.5ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mLeg Load (0.5ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (153.04ms)
+Completed 200 OK in 162ms (Views: 73.4ms | ActiveRecord: 88.1ms)
+
+
+Started GET "/api/trips" for 127.0.0.1 at 2017-07-21 21:07:54 +0100
+Processing by TripsController#index as HTML
+  [1m[36mTrip Load (0.4ms)[0m  [1m[34mSELECT "trips".* FROM "trips"[0m
+[active_model_serializers]   [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (2.6ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mComment Load (1.1ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mLeg Load (0.5ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 1]]
+[active_model_serializers]   [1m[36mUser Load (21.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mUser Load (27.2ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "trips_users" ON "users"."id" = "trips_users"."user_id" WHERE "trips_users"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mComment Load (0.5ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mLeg Load (0.5ms)[0m  [1m[34mSELECT "legs".* FROM "legs" WHERE "legs"."trip_id" = $1[0m  [["trip_id", 2]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (93.35ms)
+Completed 200 OK in 96ms (Views: 41.1ms | ActiveRecord: 54.4ms)
+
+
+  [1m[35m (4.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1347200930821886805);[0m
+  [1m[35m (4.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddPasswordDigestToUser (20170722110530)
+  [1m[35m (5.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (28.7ms)[0m  [1m[35mALTER TABLE "users" ADD "password_digest" character varying[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170722110530"]]
+  [1m[35m (3.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (3.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(1347200930821886805)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (1.0ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "dave@dave.com"], ["LIMIT", 1]]
+  [1m[35mSQL (2.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["username", "dave"], ["created_at", "2017-07-22 11:08:04.957308"], ["updated_at", "2017-07-22 11:08:04.957308"], ["email", "dave@dave.com"], ["password_digest", "$2a$10$gNoe8a2Gcj5/otNkBnXD3Oi9AOoRNdEBc0FK5/FVO.i/igW1nEZXy"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Started POST "/api/register/" for 127.0.0.1 at 2017-07-22 12:34:51 +0100
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AuthenticationsController#register as */*
+  Parameters: {"email"=>"dave@dave.com", "username"=>"david", "first_name"=>"Dave", "last_name"=>"Smith", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication"=>{"email"=>"dave@dave.com", "username"=>"david", "first_name"=>"Dave", "last_name"=>"Smith", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+Completed 204 No Content in 0ms (ActiveRecord: 0.0ms)
+
+
+Started POST "/api/register/" for 127.0.0.1 at 2017-07-22 12:35:54 +0100
+Processing by AuthenticationsController#register as */*
+  Parameters: {"email"=>"claire@claire.com", "username"=>"claire", "first_name"=>"Claire", "last_name"=>"Smith", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication"=>{"email"=>"claire@claire.com", "username"=>"claire", "first_name"=>"Claire", "last_name"=>"Smith", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+Unpermitted parameter: :authentication
+Completed 500 Internal Server Error in 53ms (ActiveRecord: 11.9ms)
+
+
+  
+ActiveModel::UnknownAttributeError (unknown attribute 'first_name' for User.):
+  
+app/controllers/authentications_controller.rb:3:in `register'
+Started POST "/api/register/" for 127.0.0.1 at 2017-07-22 12:36:22 +0100
+Processing by AuthenticationsController#register as */*
+  Parameters: {"email"=>"claire@claire.com", "username"=>"claire", "firstname"=>"Claire", "lastname"=>"Smith", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication"=>{"email"=>"claire@claire.com", "username"=>"claire", "firstname"=>"Claire", "lastname"=>"Smith", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+Unpermitted parameters: :firstname, :lastname, :authentication
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (2.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "claire@claire.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "users" ("username", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["username", "claire"], ["created_at", "2017-07-22 11:36:23.004720"], ["updated_at", "2017-07-22 11:36:23.004720"], ["email", "claire@claire.com"], ["password_digest", "$2a$10$bVR88uKhX8Xs5cwzZdAw/O4UIt/sL0RtB2nytjmAEHPfIWnksWHGy"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[36mTrip Load (5.6ms)[0m  [1m[34mSELECT "trips".* FROM "trips" WHERE "trips"."user_id" = $1[0m  [["user_id", 6]]
+[active_model_serializers]   [1m[36mTrip Load (0.6ms)[0m  [1m[34mSELECT "trips".* FROM "trips" INNER JOIN "trips_users" ON "trips"."id" = "trips_users"."trip_id" WHERE "trips_users"."user_id" = $1[0m  [["user_id", 6]]
+[active_model_serializers] Rendered UserSerializer with ActiveModelSerializers::Adapter::Attributes (65.44ms)
+Completed 200 OK in 191ms (Views: 82.4ms | ActiveRecord: 18.6ms)
+
+
+Started POST "/api/register/" for 127.0.0.1 at 2017-07-22 12:37:22 +0100
+Processing by AuthenticationsController#register as */*
+  Parameters: {"email"=>"claire@claire.com", "username"=>"", "firstname"=>"Claire", "lastname"=>"Smith", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication"=>{"email"=>"claire@claire.com", "username"=>"", "firstname"=>"Claire", "lastname"=>"Smith", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+Unpermitted parameters: :firstname, :lastname, :authentication
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (1.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "claire@claire.com"], ["LIMIT", 1]]
+  [1m[35m (2.2ms)[0m  [1m[31mROLLBACK[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.42ms)
+Completed 422 Unprocessable Entity in 98ms (Views: 8.2ms | ActiveRecord: 3.6ms)
+
+
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+Started POST "/api/login/" for 127.0.0.1 at 2017-07-22 12:45:28 +0100
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AuthenticationsController#login as */*
+  Parameters: {"email"=>"claire@claire.com", "password"=>"[FILTERED]", "authentication"=>{"email"=>"claire@claire.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "claire@claire.com"], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mTrip Load (0.5ms)[0m  [1m[34mSELECT "trips".* FROM "trips" WHERE "trips"."user_id" = $1[0m  [["user_id", 6]]
+[active_model_serializers]   [1m[36mTrip Load (0.5ms)[0m  [1m[34mSELECT "trips".* FROM "trips" INNER JOIN "trips_users" ON "trips"."id" = "trips_users"."trip_id" WHERE "trips_users"."user_id" = $1[0m  [["user_id", 6]]
+[active_model_serializers] Rendered UserSerializer with ActiveModelSerializers::Adapter::Attributes (42.29ms)
+Completed 200 OK in 168ms (Views: 58.1ms | ActiveRecord: 11.3ms)
+
+
+Started POST "/api/login/" for 127.0.0.1 at 2017-07-22 12:46:48 +0100
+Processing by AuthenticationsController#login as */*
+  Parameters: {"email"=>"claire@claire.com", "password"=>"[FILTERED]", "authentication"=>{"email"=>"claire@claire.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "claire@claire.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.21ms)
+Completed 401 Unauthorized in 90ms (Views: 5.3ms | ActiveRecord: 8.5ms)
+
+
+Started POST "/api/login/" for 127.0.0.1 at 2017-07-22 13:16:53 +0100
+  [1m[35m (2.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AuthenticationsController#login as */*
+  Parameters: {"username"=>"matt", "firstname"=>"Matt", "lastname"=>"Bradley", "email"=>"matt@matt.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication"=>{"username"=>"matt", "firstname"=>"Matt", "lastname"=>"Bradley", "email"=>"matt@matt.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "matt@matt.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.21ms)
+Completed 401 Unauthorized in 31ms (Views: 4.6ms | ActiveRecord: 3.6ms)
+
+
+Started POST "/api/register/" for 127.0.0.1 at 2017-07-22 13:17:03 +0100
+Processing by AuthenticationsController#register as */*
+  Parameters: {"username"=>"matt", "firstname"=>"Matt", "lastname"=>"Bradley", "email"=>"matt@matt.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication"=>{"username"=>"matt", "firstname"=>"Matt", "lastname"=>"Bradley", "email"=>"matt@matt.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+Unpermitted parameters: :firstname, :lastname, :authentication
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (1.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "matt@matt.com"], ["LIMIT", 1]]
+  [1m[35mSQL (3.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["username", "matt"], ["created_at", "2017-07-22 12:17:04.028991"], ["updated_at", "2017-07-22 12:17:04.028991"], ["email", "matt@matt.com"], ["password_digest", "$2a$10$V3JhTmfoexs1cjSCXshS1uc/q0x7kA6VGvha/MeGBX6SWmtS6bPtO"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[36mTrip Load (1.0ms)[0m  [1m[34mSELECT "trips".* FROM "trips" WHERE "trips"."user_id" = $1[0m  [["user_id", 7]]
+[active_model_serializers]   [1m[36mTrip Load (0.5ms)[0m  [1m[34mSELECT "trips".* FROM "trips" INNER JOIN "trips_users" ON "trips"."id" = "trips_users"."trip_id" WHERE "trips_users"."user_id" = $1[0m  [["user_id", 7]]
+[active_model_serializers] Rendered UserSerializer with ActiveModelSerializers::Adapter::Attributes (57.47ms)
+Completed 200 OK in 212ms (Views: 77.8ms | ActiveRecord: 27.5ms)
+
+
+Started POST "/api/register/" for 127.0.0.1 at 2017-07-22 13:22:05 +0100
+Processing by AuthenticationsController#register as */*
+  Parameters: {"username"=>"matt", "firstname"=>"Matt", "lastname"=>"Bradley", "email"=>"matt@matt.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication"=>{"username"=>"matt", "firstname"=>"Matt", "lastname"=>"Bradley", "email"=>"matt@matt.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+Unpermitted parameter: :authentication
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "matt@matt.com"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.19ms)
+Completed 422 Unprocessable Entity in 142ms (Views: 3.5ms | ActiveRecord: 7.5ms)
+
+
+Started POST "/api/register/" for 127.0.0.1 at 2017-07-22 13:22:26 +0100
+Processing by AuthenticationsController#register as */*
+  Parameters: {"username"=>"matt", "firstname"=>"Matt", "lastname"=>"Bradley", "email"=>"matt2@matt.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "authentication"=>{"username"=>"matt", "firstname"=>"Matt", "lastname"=>"Bradley", "email"=>"matt2@matt.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+Unpermitted parameter: :authentication
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "matt2@matt.com"], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "users" ("username", "firstname", "lastname", "created_at", "updated_at", "email", "password_digest") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "matt"], ["firstname", "Matt"], ["lastname", "Bradley"], ["created_at", "2017-07-22 12:22:26.282405"], ["updated_at", "2017-07-22 12:22:26.282405"], ["email", "matt2@matt.com"], ["password_digest", "$2a$10$TPX9HMhRlE9ASlyjNBO4reYUmC1W8hvV6..1NwXtNbKG2bZ587vNi"]]
+  [1m[35m (2.5ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers]   [1m[36mTrip Load (0.4ms)[0m  [1m[34mSELECT "trips".* FROM "trips" WHERE "trips"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers]   [1m[36mTrip Load (0.9ms)[0m  [1m[34mSELECT "trips".* FROM "trips" INNER JOIN "trips_users" ON "trips"."id" = "trips_users"."trip_id" WHERE "trips_users"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers] Rendered UserSerializer with ActiveModelSerializers::Adapter::Attributes (36.65ms)
+Completed 200 OK in 121ms (Views: 27.1ms | ActiveRecord: 16.3ms)
+
+
+Started GET "/api/users/8/" for 127.0.0.1 at 2017-07-22 13:23:02 +0100
+Processing by UsersController#show as */*
+  Parameters: {"username"=>"matt", "firstname"=>"Matt", "lastname"=>"Bradley", "email"=>"matt2@matt.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "id"=>"8", "user"=>{"username"=>"matt", "firstname"=>"Matt", "lastname"=>"Bradley", "email"=>"matt2@matt.com"}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mTrip Load (0.5ms)[0m  [1m[34mSELECT "trips".* FROM "trips" WHERE "trips"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers]   [1m[36mTrip Load (0.6ms)[0m  [1m[34mSELECT "trips".* FROM "trips" INNER JOIN "trips_users" ON "trips"."id" = "trips_users"."trip_id" WHERE "trips_users"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers] Rendered UserSerializer with ActiveModelSerializers::Adapter::Attributes (21.74ms)
+Completed 200 OK in 44ms (Views: 18.3ms | ActiveRecord: 12.4ms)
+
+
+Started GET "/api/users/8" for 127.0.0.1 at 2017-07-22 13:23:03 +0100
+Processing by UsersController#show as */*
+  Parameters: {"username"=>"matt", "firstname"=>"Matt", "lastname"=>"Bradley", "email"=>"matt2@matt.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "id"=>"8", "user"=>{"username"=>"matt", "firstname"=>"Matt", "lastname"=>"Bradley", "email"=>"matt2@matt.com"}}
+  [1m[36mUser Load (1.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mTrip Load (0.7ms)[0m  [1m[34mSELECT "trips".* FROM "trips" WHERE "trips"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers]   [1m[36mTrip Load (1.2ms)[0m  [1m[34mSELECT "trips".* FROM "trips" INNER JOIN "trips_users" ON "trips"."id" = "trips_users"."trip_id" WHERE "trips_users"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers] Rendered UserSerializer with ActiveModelSerializers::Adapter::Attributes (11.19ms)
+Completed 200 OK in 17ms (Views: 10.6ms | ActiveRecord: 3.5ms)
+
+
+Started GET "/api/users/8" for 127.0.0.1 at 2017-07-22 13:23:12 +0100
+Processing by UsersController#show as */*
+  Parameters: {"username"=>"matt", "firstname"=>"Matt", "lastname"=>"Bradley", "email"=>"matt2@matt.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "id"=>"8", "user"=>{"username"=>"matt", "firstname"=>"Matt", "lastname"=>"Bradley", "email"=>"matt2@matt.com"}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mTrip Load (0.4ms)[0m  [1m[34mSELECT "trips".* FROM "trips" WHERE "trips"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers]   [1m[36mTrip Load (0.6ms)[0m  [1m[34mSELECT "trips".* FROM "trips" INNER JOIN "trips_users" ON "trips"."id" = "trips_users"."trip_id" WHERE "trips_users"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers] Rendered UserSerializer with ActiveModelSerializers::Adapter::Attributes (27.14ms)
+Completed 200 OK in 66ms (Views: 23.3ms | ActiveRecord: 21.7ms)
+
+
+Started POST "/api/login" for 127.0.0.1 at 2017-07-22 13:43:38 +0100
+Error occurred while parsing request parameters.
+Contents:
+
+{
+    "email": "matt2@matt.com", 
+    "password": "password",
+}
+  
+ActionDispatch::Http::Parameters::ParseError (822: unexpected token at '{
+    "email": "matt2@matt.com", 
+    "password": "password",
+}'):
+  
+actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:113:in `rescue in parse_formatted_parameters'
+actionpack (5.1.2) lib/action_dispatch/http/parameters.rb:107:in `parse_formatted_parameters'
+actionpack (5.1.2) lib/action_dispatch/http/request.rb:358:in `block in POST'
+rack (2.0.3) lib/rack/request.rb:57:in `fetch'
+rack (2.0.3) lib/rack/request.rb:57:in `fetch_header'
+actionpack (5.1.2) lib/action_dispatch/http/request.rb:357:in `POST'
+actionpack (5.1.2) lib/action_controller/metal/params_wrapper.rb:286:in `_wrapper_enabled?'
+actionpack (5.1.2) lib/action_controller/metal/params_wrapper.rb:235:in `process_action'
+activerecord (5.1.2) lib/active_record/railties/controller_runtime.rb:22:in `process_action'
+actionpack (5.1.2) lib/abstract_controller/base.rb:124:in `process'
+actionpack (5.1.2) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.2) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:46:in `block in serve'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.2) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.2) lib/action_dispatch/routing/route_set.rb:832:in `call'
+rack (2.0.3) lib/rack/etag.rb:25:in `call'
+rack (2.0.3) lib/rack/conditional_get.rb:38:in `call'
+rack (2.0.3) lib/rack/head.rb:12:in `call'
+activerecord (5.1.2) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.2) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.2) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.0) lib/rack/cors.rb:93:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.9.1) lib/puma/configuration.rb:224:in `call'
+puma (3.9.1) lib/puma/server.rb:602:in `handle_request'
+puma (3.9.1) lib/puma/server.rb:435:in `process_client'
+puma (3.9.1) lib/puma/server.rb:299:in `block in run'
+puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started POST "/api/login" for 127.0.0.1 at 2017-07-22 13:43:55 +0100
+Processing by AuthenticationsController#login as */*
+  Parameters: {"email"=>"matt2@matt.com", "password"=>"[FILTERED]", "authentication"=>{"email"=>"matt2@matt.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (1.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "matt2@matt.com"], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 132ms (ActiveRecord: 1.8ms)
+
+
+  
+NoMethodError (undefined method `from_now' for 2880:Fixnum):
+  
+lib/auth.rb:8:in `issue'
+app/controllers/authentications_controller.rb:14:in `login'
+Started POST "/api/login" for 127.0.0.1 at 2017-07-22 13:47:17 +0100
+Processing by AuthenticationsController#login as */*
+  Parameters: {"email"=>"matt2@matt.com", "password"=>"[FILTERED]", "authentication"=>{"email"=>"matt2@matt.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (24.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "matt2@matt.com"], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 174ms (ActiveRecord: 24.3ms)
+
+
+  
+NoMethodError (undefined method `from_now' for 2880:Fixnum):
+  
+lib/auth.rb:8:in `issue'
+app/controllers/authentications_controller.rb:14:in `login'
+Started POST "/api/login" for 127.0.0.1 at 2017-07-22 13:47:48 +0100
+Processing by AuthenticationsController#login as */*
+  Parameters: {"email"=>"matt2@matt.com", "password"=>"[FILTERED]", "authentication"=>{"email"=>"matt2@matt.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (4.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "matt2@matt.com"], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mTrip Load (7.3ms)[0m  [1m[34mSELECT "trips".* FROM "trips" WHERE "trips"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers]   [1m[36mTrip Load (6.6ms)[0m  [1m[34mSELECT "trips".* FROM "trips" INNER JOIN "trips_users" ON "trips"."id" = "trips_users"."trip_id" WHERE "trips_users"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (49.77ms)
+Completed 200 OK in 177ms (Views: 42.9ms | ActiveRecord: 18.0ms)
+
+
+Started POST "/api/trips" for 127.0.0.1 at 2017-07-22 14:05:48 +0100
+Processing by TripsController#create as */*
+  Parameters: {"email"=>"matt2@matt.com", "password"=>"[FILTERED]", "trip"=>{}}
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.24ms)
+Filter chain halted as :authenticate_user! rendered or redirected
+Completed 401 Unauthorized in 9ms (Views: 6.6ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/api/login" for 127.0.0.1 at 2017-07-22 14:08:33 +0100
+Processing by AuthenticationsController#login as */*
+  Parameters: {"email"=>"matt2@matt.com", "password"=>"[FILTERED]", "authentication"=>{"email"=>"matt2@matt.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (12.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "matt2@matt.com"], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mTrip Load (4.5ms)[0m  [1m[34mSELECT "trips".* FROM "trips" WHERE "trips"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers]   [1m[36mTrip Load (0.6ms)[0m  [1m[34mSELECT "trips".* FROM "trips" INNER JOIN "trips_users" ON "trips"."id" = "trips_users"."trip_id" WHERE "trips_users"."user_id" = $1[0m  [["user_id", 8]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (27.74ms)
+Completed 200 OK in 180ms (Views: 27.7ms | ActiveRecord: 17.5ms)
+
+
+Started POST "/api/trips" for 127.0.0.1 at 2017-07-22 14:09:37 +0100
+Processing by TripsController#create as */*
+  [1m[36mUser Load (12.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with ActiveModel::Errors (0.94ms)
+Completed 422 Unprocessable Entity in 112ms (Views: 3.3ms | ActiveRecord: 23.2ms)
+
+
