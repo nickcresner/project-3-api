@@ -8,14 +8,16 @@ alex = User.create!(
   firstname: "Alex",
   lastname: "Cwiek",
   email: "alex@alex.com",
-  bio: "likes cats"
+  bio: "likes cats",
+  password: "password"
 )
 nick = User.create!(
   username: "KabanosBoy666",
   firstname: "Nick",
   lastname: "Cresner",
   email: "nick@nick.com",
-  bio: "likes kabanosy and pierogi"
+  bio: "likes kabanosy and pierogi",
+  password: "password"
 )
 
 
