@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
 
-
+  get 'darksky/weather'
   scope :api do
+
     post 'oauth/facebook'
+    get 'weather', to: 'darksky#weather'
 
     resources :legs
     resources :comments
