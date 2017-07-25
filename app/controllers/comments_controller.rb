@@ -16,6 +16,7 @@ class CommentsController < ApplicationController
   # POST /comments
   def create
     @comment = Comment.new(comment_params)
+    @comment.user = current_user
 
     if @comment.save
       render json: @comment, status: :created, location: @comment
@@ -35,17 +36,18 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1
   def destroy
+    return render json: { errors: ["Unauthorized"] }, status: 401 if @comment.user != current_user
     @comment.destroy
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_comment
-      @comment = Comment.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_comment
+    @comment = Comment.find(params[:id])
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def comment_params
-      params.permit(:body, :user_id, :trip_id)
-    end
+  # Only allow a trusted parameter "white list" through.
+  def comment_params
+    params.permit(:body, :user_id, :trip_id)
+  end
 end
