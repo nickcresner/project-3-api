@@ -3,10 +3,12 @@ class BudgetYourTripController < ApplicationController
   skip_before_action :authenticate_user!
 
   def budget
-    country_data = HTTParty.get("http://www.budgetyourtrip.com/api/v3/search/geo/#{params[:lat]}/#{params[:lng]}",
-      {
-      headers: { "X-API-KEY": ENV['BUDGET_YOUR_TRIP_KEY'], "Accept" => "application/json"}
-    }).parsed_response
+
+    headers = { "X-API-KEY" => ENV['BUDGET_YOUR_TRIP_KEY'], "Accept" => "application/json" }
+
+    country_data = HTTParty.get("http://www.budgetyourtrip.com/api/v3/search/geo/#{params[:lat]}/#{params[:lng]}", headers: headers).parsed_response
+
+    p country_data
 
     country_code = country_data["data"][0]["country_code"]
 
@@ -14,7 +16,7 @@ class BudgetYourTripController < ApplicationController
 
     daily_budget = HTTParty.get("http://www.budgetyourtrip.com/api/v3/costs/country/#{country_code}",
       {
-        headers: { "X-API-KEY": ENV['BUDGET_YOUR_TRIP_KEY'], "Accept" => "application/json"}
+        headers: { "X-API-KEY" => ENV['BUDGET_YOUR_TRIP_KEY'], "Accept" => "application/json" }
       }).parsed_response
 
     p daily_budget
