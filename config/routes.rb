@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
     post 'oauth/facebook'
     get 'weather', to: 'darksky#weather'
+    get 'budget', to: 'budget_your_trip#budget'
 
     resources :legs
     resources :comments
