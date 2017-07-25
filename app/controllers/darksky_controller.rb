@@ -9,7 +9,6 @@ class DarkskyController < ApplicationController
       headers: { "Accept" => "application/json"}
     }).parsed_response
 
-    p forecast
     render json: forecast, status: :ok
   end
 
