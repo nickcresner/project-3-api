@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   validates :username, presence: true, unless: :oauth_login?
   validates :email, uniqueness: true, presence: true, unless: :oauth_login?
-  validates :password, presence: true, confirmation: true, unless: :oauth_login?
+  validates :password, presence: true, confirmation: true, unless: :oauth_login?, on: :create
 
   def oauth_login?
   facebook_id.present?
