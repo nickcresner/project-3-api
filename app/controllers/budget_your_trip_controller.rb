@@ -9,15 +9,19 @@ class BudgetYourTripController < ApplicationController
     }).parsed_response
 
     country_code = country_data["data"][0]["country_code"]
+    currency_code = country_data["data"][0]["currency_code"]
 
-    p country_code
+    p currency_code
+
+    # render json: country_data["data"], status: :ok
 
     daily_budget = HTTParty.get("http://www.budgetyourtrip.com/api/v3/costs/country/#{country_code}",
       {
         headers: { "X-API-KEY": ENV['BUDGET_YOUR_TRIP_KEY'], "Accept" => "application/json"}
       }).parsed_response
 
-    p daily_budget
+    daily_budget["data"].last["currency_code"] = currency_code
+
     render json: daily_budget["data"].last, status: :ok
   end
 
