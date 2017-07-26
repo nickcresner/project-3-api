@@ -12,7 +12,7 @@ class TripsController < ApplicationController
 
   # GET /trips/1
   def show
-    render json: @trip
+    render json: @trip, include: ['comments.user']
   end
 
   # POST /trips
