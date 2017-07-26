@@ -12,7 +12,7 @@ class TripsController < ApplicationController
 
   # GET /trips/1
   def show
-    render json: @trip, include: ['comments.user']
+    render json: @trip, include: ['comments.user', 'attendees', 'user']
   end
 
   # POST /trips
@@ -28,7 +28,6 @@ class TripsController < ApplicationController
 
   # PATCH/PUT /trips/1
   def update
-    return render json: { errors: ["Unauthorized"] }, status: 401 if @trip.user != current_user
     if @trip.update(Uploader.upload(trip_params))
       render json: @trip
     else
