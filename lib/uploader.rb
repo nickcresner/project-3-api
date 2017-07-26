@@ -31,6 +31,7 @@ class Uploader
       params[:image] = uploaded_file
       params.delete(:base64)
     end
+    p params
     return params
   end
 

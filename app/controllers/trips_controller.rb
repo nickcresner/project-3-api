@@ -37,6 +37,7 @@ class TripsController < ApplicationController
 
   # DELETE /trips/1
   def destroy
+    return render json: { errors: ["Unauthorized"] }, status: 401 if @trip.user != current_user
     @trip.destroy
   end
 

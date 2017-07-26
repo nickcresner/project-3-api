@@ -13,7 +13,7 @@ class BudgetYourTripController < ApplicationController
 
     p currency_code
 
-    # render json: country_data["data"], status: :ok
+
 
     daily_budget = HTTParty.get("http://www.budgetyourtrip.com/api/v3/costs/country/#{country_code}",
       {
