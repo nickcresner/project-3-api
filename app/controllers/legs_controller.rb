@@ -1,5 +1,5 @@
 class LegsController < ApplicationController
-  # before_action :set_leg, only: [:show, :update, :destroy]
+  before_action :set_leg, only: [:show, :update, :destroy]
   skip_before_action :authenticate_user!
 
   # GET /legs
