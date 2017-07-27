@@ -23,6 +23,16 @@ class BudgetYourTripController < ApplicationController
     daily_budget["data"].last["currency_code"] = currency_code
 
     render json: daily_budget["data"].last, status: :ok
+
+    # currency_conversion =
+    # HTTParty.get("http://www.budgetyourtrip.com/api/v3/currencies/convert/#{currency_code}/gbp/1"),
+    # {
+    #   headers: { "X-API-KEY": ENV['BUDGET_YOUR_TRIP_KEY'], "Accept" => "application/json"}
+    # }).parsed_response
+    #
+    # render json: currency_conversion, status: :ok
+    #
+    # p currency_conversion
   end
 
 
