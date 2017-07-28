@@ -7,7 +7,7 @@ class OauthController < ApplicationController
     query: {
       client_id: ENV["FACEBOOK_APP_ID"],
       client_secret: ENV["FACEBOOK_APP_SECRET"],
-      redirect_uri: 'https://peaceful-meadow-84693.herokuapp.com/',
+      redirect_uri: 'https://adventurefy.herokuapp.com/',
       code: params[:code]
     },
     headers: { "Accept" => 'application/json' }
