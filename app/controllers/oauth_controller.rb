@@ -18,7 +18,7 @@ class OauthController < ApplicationController
     headers: { "User-Agent"  => "HTTParty", "Accept" => "application/json" }
     }).parsed_response
 
-    p "**************PROFILE: #{profile}"
+    p "**************PROFILE: #{profile} TOKEN: #{token}"
 
       user = User.where("facebook_id = :facebook_id OR email = :email", facebook_id: profile["id"], email: profile["email"]).first
 
