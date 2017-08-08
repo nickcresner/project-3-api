@@ -47,6 +47,6 @@ class LegsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def leg_params
-      params.permit(:name, :lat, :lng, :trip_id)
+      params.permit(:name, :lat, :lng, :trip_id, :leg_number)
     end
 end
