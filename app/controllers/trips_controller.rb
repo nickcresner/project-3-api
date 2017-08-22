@@ -1,6 +1,6 @@
 class TripsController < ApplicationController
   before_action :set_trip, only: [:show, :update, :destroy]
-  # skip_before_action :authenticate_user!
+  skip_before_action :authenticate_user!
 
 
   # GET /trips
