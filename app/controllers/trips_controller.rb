@@ -1,6 +1,6 @@
 class TripsController < ApplicationController
   before_action :set_trip, only: [:show, :update, :destroy]
-  skip_before_action :authenticate_user!
+  # skip_before_action :authenticate_user!
 
 
   # GET /trips
@@ -38,7 +38,7 @@ class TripsController < ApplicationController
 
   # DELETE /trips/1
   def destroy
-    # return render json: { errors: ["Unauthorized"] }, status: 401 if @trip.user != current_user
+    return render json: { errors: ["Unauthorized"] }, status: 401 if @trip.user != current_user
     @trip.destroy
   end
 
